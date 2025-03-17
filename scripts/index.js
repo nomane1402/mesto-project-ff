@@ -2,34 +2,35 @@
 
 const cardTemplate = document.querySelector('#card-template').content; // получаем содержимое темплейта
 
-const cardElement = cardTemplate.querySelector('.places__item card').cloneNode(true); // клонированируем элемент темплейта
+const placesList = document.querySelector('.places__list'); // куда будем добавлять элементы 
 
 // @todo: DOM узлы
 
-const content = document.querySelector('.content');
-
-
-const imageElement = document.createElement('img');
-imageElement.classList.add('card__image');
-
-const deleteButtonElement = document.createElement('button');
-deleteButtonElement.classList.add('card__delete-button');
-
-const titleElement = document.createElement('h2');
-titleElement.classList.add('card__title');
-
-const likeButtonElement = document.createElement('button');
-likeButtonElement.classList.add('card__like-button');
-
-
 // @todo: Функция создания карточки
 
-function createCard() {
-
+function createCard (initialCards) {
+    const placeElement = cardTemplate.querySelector('.places__item').cloneNode(true); // клонированирую элемент темплейта
+    placesList.append(placeElement); // добавляю темплейт
+    placeElement.querySelector('.card__image').src = initialCards.link; // заполнить src у card__image
+    placeElement.querySelector('.card__title').textContent = initialCards.name; // заполнить textContent у card__title
+    placeElement.querySelector('.card__delete-button').addEventListener('click', deleteCard); // обработчик клика для кнопки удаления
 }
+
+// initialCards.forEach(function (item) {
+//     const placeElement = cardTemplate.querySelector('.places__item').cloneNode(true); 
+//     placesList.append(placeElement); 
+//     placeElement.querySelector('.card__image').src = item.link; 
+//     placeElement.querySelector('.card__title').textContent = item.name; 
+//     placeElement.querySelector('.card__delete-button').addEventListener('click', deleteCard); 
+// });
 
 // @todo: Функция удаления карточки
 
-
+function deleteCard (initialCards) {
+    const placeElement = document.querySelector('.places__item');
+    placeElement.remove();
+}
 
 // @todo: Вывести карточки на страницу
+
+initialCards.forEach(createCard);
