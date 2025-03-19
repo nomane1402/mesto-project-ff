@@ -10,13 +10,24 @@ const placesList = document.querySelector('.places__list'); // куда буде
 
 // @todo: Функция создания карточки
 
+// function createCard (item) {
+//     const placeElement = cardTemplate.querySelector('.places__item').cloneNode(true); // клонированирую элемент темплейта
+//     placesList.append(placeElement); // добавляю темплейт
+//     placeElement.querySelector('.card__image').src = item.link; // заполнить src у card__image
+//     placeElement.querySelector('.card__image').alt = "Фото места " + item.name;
+//     placeElement.querySelector('.card__title').textContent = item.name; // заполнить textContent у card__title
+//     placeElement.querySelector('.card__delete-button').addEventListener('click', deleteCard); // обработчик клика для кнопки удаления
+// }
+
 function createCard (item) {
     const placeElement = cardTemplate.querySelector('.places__item').cloneNode(true); // клонированирую элемент темплейта
-    placesList.append(placeElement); // добавляю темплейт
+    
     placeElement.querySelector('.card__image').src = item.link; // заполнить src у card__image
     placeElement.querySelector('.card__image').alt = "Фото места " + item.name;
     placeElement.querySelector('.card__title').textContent = item.name; // заполнить textContent у card__title
     placeElement.querySelector('.card__delete-button').addEventListener('click', deleteCard); // обработчик клика для кнопки удаления
+
+    return placeElement;
 }
 
 // @todo: Функция удаления карточки
@@ -28,15 +39,23 @@ function deleteCard (event) {
 
 // @todo: Функция вставки карточки на страницу
 
-
+function renderCard (placeElement) {
+    placesList.prepend(placeElement); // добавляю темплейт
+}
 
 // @todo: Вывести карточки на страницу
 
-initialCards.forEach(createCard);
+// initialCards.forEach(createCard);
 
-const test = {
-    name : "test",
-    link : "https://images.unsplash.com/photo-1725980457213-e718a2b7bb5a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-}
+initialCards.forEach((card) => { 
+    renderCard(createCard(card)) 
+});  
 
-createCard(test);
+// Тестирование добавления дополнительной карточки
+
+// const test = {
+//     name : "test",
+//     link : "https://images.unsplash.com/photo-1725980457213-e718a2b7bb5a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+// }
+
+// renderCard(createCard(test));
