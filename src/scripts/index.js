@@ -3,7 +3,21 @@ import '../pages/index.css';
 import { createCard, deleteCard, likeCard } from './components/cards.js';
 import { openPopup, closePopup } from './components/modal.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+// Глобальные DOM элементы
+const placesList = document.querySelector('.places__list'); // куда будем добавлять элементы 
+const editProfilePopup = document.querySelector('.popup_type_edit'); // попап редактирования профиля
+const newCardPopup = document.querySelector('.popup_type_new-card'); // попап добавления карточки
+const imagePopup = document.querySelector('.popup_type_image'); // попап раскрытой картинки
+const allPopups = document.querySelectorAll('.popup'); // все попапы
+const currentName = document.querySelector('.profile__title');
+const currentJob = document.querySelector('.profile__description');
+const nameInput = document.querySelector('.popup__input_type_name');
+const jobInput = document.querySelector('.popup__input_type_description');
+const placeNameInput = document.querySelector('.popup__input_type_card-name');
+const placeLinkInput = document.querySelector('.popup__input_type_url');  
+const editProfileButton = document.querySelector('.profile__edit-button');
+const addCardButton = document.querySelector('.profile__add-button');
+const closeButtons = document.querySelectorAll('.popup__close');
 
 // Элементы карточек 
 
@@ -34,28 +48,14 @@ const initialCards = [
   }
 ];
 
-// DOM элементы
-// const cardTemplate = document.querySelector('#card-template').content; // получаем содержимое темплейта
-const placesList = document.querySelector('.places__list'); // куда будем добавлять элементы 
-
-    // Элементы попапов
-    const editProfilePopup = document.querySelector('.popup_type_edit');
-    const newCardPopup = document.querySelector('.popup_type_new-card');
-    const allPopups = document.querySelectorAll('.popup');
-    const currentName = document.querySelector('.profile__title');
-    const currentJob = document.querySelector('.profile__description');
-    const nameInput = document.querySelector('.popup__input_type_name');
-    const jobInput = document.querySelector('.popup__input_type_description');
-
-    // Кнопки
-    const editProfileButton = document.querySelector('.profile__edit-button');
-    const addCardButton = document.querySelector('.profile__add-button');
-    const closeButtons = document.querySelectorAll('.popup__close');
-  
+  // Функция заполнения профиля
+  function fillProfile() {
+    nameInput.value = currentName.textContent;
+    jobInput.value = currentJob.textContent;
+  };
 
 // Функция расскрытия картинки
 function imageClick (item) {
-  const imagePopup = document.querySelector('.popup_type_image');
   const popupImage = document.querySelector('.popup__image');
   const popupCaption = document.querySelector('.popup__caption');
 
@@ -78,11 +78,13 @@ function renderCard (cardData) {
     placesList.prepend(cardElement); // добавляю темплейт
 }
 
-// @todo: Вывести карточки на страницу
+// Инициализация при загрузке в DOM
+
+document.addEventListener('DOMContentLoaded', function() { 
+
+// Начальные карточки
 
 initialCards.forEach(renderCard);  
-
-// Спринт 6
 
     // Обработчик Overlay
     function overlayClick(event) {
@@ -98,12 +100,13 @@ initialCards.forEach(renderCard);
 
     // Слушатель редактирования профиля
     editProfileButton.addEventListener('click', function(){
-      openPopup(editProfilePopup)
+      openPopup(editProfilePopup);
+      fillProfile();
     });
 
     // Слушатель добавления карточки
     addCardButton.addEventListener('click', function() {
-      openPopup(newCardPopup)
+      openPopup(newCardPopup);
     });
     
     // Закрытие попапа по нажатию на крестик
@@ -128,15 +131,13 @@ initialCards.forEach(renderCard);
 
     // Обработчик события submit Add Card Form
     function handleAddCardFormSubmit(evt) {
-      evt.preventDefault();
-      const placeName = document.querySelector('.popup__input_type_card-name');
-      const placeLink = document.querySelector('.popup__input_type_url');  
+      evt.preventDefault();  
       const newPlace = {
-        name: placeName.value, 
-        link: placeLink.value
+        name: placeNameInput.value, 
+        link: placeLinkInput.value
       }
-      placeName.value = '';
-      placeLink.value = '';
+      placeNameInput.value = '';
+      placeLinkInput.value = '';
       renderCard(newPlace);
       closePopup(this);
     }

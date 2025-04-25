@@ -1,16 +1,25 @@
+// import { fillProfile } from "../index.js";
 
 // Функции открытия попапа
 export function openPopup(popup) {
-    if (popup === document.querySelector('.popup_type_edit')) {
-        fillProfile();
-    }
-        popup.classList.add('popup_is-opened');
-        document.addEventListener('keydown', escapeListener);
-    }
+  popup.classList.add('popup_is-opened');
+
+  setTimeout(() => {
+    popup.classList.add('popup_is-opened');
+  }, 10);
+  
+  document.addEventListener('keydown', escapeListener);
+}
 
 // Функция закрытия попапа
 export function closePopup(popup) {
     popup.classList.remove('popup_is-opened');
+
+    popup.addEventListener('transitionend', function handler() {
+      popup.classList.remove('popup_is-animated');
+      popup.removeEventListener('transitionend', handler);
+    }, { once: true});
+    
     document.removeEventListener('keydown', escapeListener);
 }
 
@@ -24,12 +33,3 @@ function escapeListener(event) {
       }
     }
 
-// Функция заполнения профиля
-function fillProfile() {
-    const currentName = document.querySelector('.profile__title');
-    const currentJob = document.querySelector('.profile__description');
-    const nameInput = document.querySelector('.popup__input_type_name');
-    const jobInput = document.querySelector('.popup__input_type_description');
-    nameInput.value = currentName.textContent;
-    jobInput.value = currentJob.textContent;
-  };
