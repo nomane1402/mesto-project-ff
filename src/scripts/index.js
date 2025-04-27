@@ -8,6 +8,7 @@ const placesList = document.querySelector('.places__list'); // куда буде
 const editProfilePopup = document.querySelector('.popup_type_edit'); // попап редактирования профиля
 const newCardPopup = document.querySelector('.popup_type_new-card'); // попап добавления карточки
 const imagePopup = document.querySelector('.popup_type_image'); // попап раскрытой картинки
+const popupImage = document.querySelector('.popup__image');
 const allPopups = document.querySelectorAll('.popup'); // все попапы
 const currentName = document.querySelector('.profile__title');
 const currentJob = document.querySelector('.profile__description');
@@ -56,7 +57,6 @@ const initialCards = [
 
 // Функция расскрытия картинки
 function imageClick (item) {
-  const popupImage = document.querySelector('.popup__image');
   const popupCaption = document.querySelector('.popup__caption');
 
   popupImage.src = item.link;

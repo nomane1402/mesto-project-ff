@@ -5,8 +5,8 @@ export function createCard (item, likeHandler, deleteHandler, expandPicture) {
   const placeElement = cardTemplate.querySelector('.places__item').cloneNode(true); // клонированирую элемент темплейта
   const cardImage = placeElement.querySelector('.card__image');
   
-  placeElement.querySelector('.card__image').src = item.link; // заполнить src у card__image
-  placeElement.querySelector('.card__image').alt = "Фото места " + item.name;
+  cardImage.src = item.link;
+  cardImage.alt = "Фото места " + item.name;
   placeElement.querySelector('.card__title').textContent = item.name; // заполнить textContent у card__title
   placeElement.querySelector('.card__delete-button').addEventListener('click', (event) => {deleteHandler(event)}); // обработчик клика для кнопки удаления
   placeElement.querySelector('.card__like-button').addEventListener('click', likeHandler);

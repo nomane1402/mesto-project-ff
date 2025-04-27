@@ -3,11 +3,6 @@
 // Функции открытия попапа
 export function openPopup(popup) {
   popup.classList.add('popup_is-opened');
-
-  setTimeout(() => {
-    popup.classList.add('popup_is-opened');
-  }, 10);
-  
   document.addEventListener('keydown', escapeListener);
 }
 
